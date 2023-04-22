@@ -13,4 +13,9 @@
     <string name="city">City</string>
     <string name="postal_code">Postal code</string>
     <string name="back_to_login">Back to Login</string>
+    <string name="empty_string">Empty</string>
+    <string name="name">Name</string>
+    <string name="placeholder">placeholder</string>
+    <string name="profile">Profile</string>
+    <string name="my_tickets">My tickets</string>
 </resources>
