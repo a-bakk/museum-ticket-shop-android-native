@@ -10,11 +10,18 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the ticket system of Imaginary Museum"
+        android:text="@string/welcome_to_the_ticket_system_of_imaginary_museum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.082" />
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exhibitionRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.museumticketshop.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -24,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText postalCodeET;
     private EditText passwordET;
     private EditText rePasswordET;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
         postalCodeET = findViewById(R.id.registerPostalCode);
         passwordET = findViewById(R.id.registerPassword);
         rePasswordET = findViewById(R.id.registerRePassword);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void register(View view) {
@@ -63,6 +72,22 @@ public class RegisterActivity extends AppCompatActivity {
         String postalCode = extractStringFromEditText(postalCodeET);
         String rawPassword = extractStringFromEditText(passwordET);
         String rawRePassword = extractStringFromEditText(rePasswordET);
+
+        // TODO: get it out of here
+        mAuth.createUserWithEmailAndPassword(emailAddress, rawPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // TODO: redirect to buy tickets
+                        } else {
+                            Toast.makeText(RegisterActivity.this,
+                                    "Problem with creating user", Toast.LENGTH_LONG).show();
+                            // task.getException().getMessage();
+                        }
+                    }
+                });
+
     }
 
     public void redirectToLogin(View view) {
@@ -73,4 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String extractStringFromEditText(EditText editText) {
         return editText == null ? "" : editText.getText().toString();
     }
+
+//    private AuthResult registerNewUser();
 }

@@ -1,11 +1,14 @@
 package com.example.museumticketshop;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-
+    private RecyclerView exhibitionRecyclerView;
+//    private ArrayList<Exhibiton> exhibitionList;
+//    private ExhibitionAdapter exhibitionAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

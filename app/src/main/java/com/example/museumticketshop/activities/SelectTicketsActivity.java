@@ -79,7 +79,7 @@ public class SelectTicketsActivity extends AppCompatActivity
             ticketDate = Calendar.getInstance().getTime();
         }
 
-        
+
     }
 
     @Override

@@ -30,6 +30,13 @@
     <string name="choose_an_exhibition_from_the_available_ones">Choose an exhibition from the available ones</string>
     <string name="choose_how_many_full_price_tickets_you_d_like">Choose how many full price tickets you\'d like</string>
     <string name="choose_how_many_half_price_tickets_you_d_like">Choose how many half price tickets you\'d like</string>
+    <string name="welcome_to_the_ticket_system_of_imaginary_museum">Welcome to the ticket system of Imaginary Museum</string>
+    <string name="name_placeholder">Name placeholder</string>
+    <string name="description_placeholder">Description placeholder</string>
+    <string name="image_of_the_exhibiton">Image of the exhibiton</string>
+    <string name="interested_buy_tickets_requires_login">Interested? Buy tickets! (requires login)</string>
+    <string name="image_of_the_exhibition">Image of the exhibition</string>
+    <string name="login_with_google">Login with Google</string>
     <string-array name="number_of_tickets">
         <item>0</item>
         <item>1</item>
@@ -38,4 +45,5 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <string name="default_web_client_id">AIzaSyDV_6lgjmfMYUMLAhjcfqcV2qbr3Q5Xrhg</string>
 </resources>
