@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profileNamePlaceholder"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/email_address"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profileEmailAddressPlaceholder"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/street_number"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profileStreetAndNumberPlaceholder"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -121,7 +121,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/city"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profileCityPlaceholder"
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/postal_code"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profilePostalCodePlaceholder"
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <TextView
@@ -165,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/my_tickets"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
