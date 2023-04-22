@@ -12,4 +12,5 @@
     <string name="street_number">Street, number</string>
     <string name="city">City</string>
     <string name="postal_code">Postal code</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>
