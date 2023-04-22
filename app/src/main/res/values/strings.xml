@@ -33,10 +33,11 @@
     <string name="welcome_to_the_ticket_system_of_imaginary_museum">Welcome to the ticket system of Imaginary Museum</string>
     <string name="name_placeholder">Name placeholder</string>
     <string name="description_placeholder">Description placeholder</string>
-    <string name="image_of_the_exhibiton">Image of the exhibiton</string>
     <string name="interested_buy_tickets_requires_login">Interested? Buy tickets! (requires login)</string>
     <string name="image_of_the_exhibition">Image of the exhibition</string>
     <string name="login_with_google">Login with Google</string>
+    <string name="logout">Logout</string>
+    <string name="exhibitions">Exhibitions</string>
     <string-array name="number_of_tickets">
         <item>0</item>
         <item>1</item>
@@ -45,5 +46,4 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <string name="default_web_client_id">AIzaSyDV_6lgjmfMYUMLAhjcfqcV2qbr3Q5Xrhg</string>
 </resources>

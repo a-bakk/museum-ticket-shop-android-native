@@ -42,15 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
-
-        if (!Objects.equals(
-                sharedPreferences.getString("loginEmailAddress", VALUE_DOES_NOT_EXIST),
-                VALUE_DOES_NOT_EXIST)) {
-            emailAddressET.setText
-                    (sharedPreferences.getString("loginEmailAddress", VALUE_DOES_NOT_EXIST));
-        }
-
         firstNameET = findViewById(R.id.registerFirstName);
         lastNameET = findViewById(R.id.registerLastName);
         emailAddressET = findViewById(R.id.registerEmailAddress);
@@ -59,6 +50,15 @@ public class RegisterActivity extends AppCompatActivity {
         postalCodeET = findViewById(R.id.registerPostalCode);
         passwordET = findViewById(R.id.registerPassword);
         rePasswordET = findViewById(R.id.registerRePassword);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
+
+        if (!Objects.equals(
+                sharedPreferences.getString("loginEmailAddress", VALUE_DOES_NOT_EXIST),
+                VALUE_DOES_NOT_EXIST)) {
+            emailAddressET.setText
+                    (sharedPreferences.getString("loginEmailAddress", VALUE_DOES_NOT_EXIST));
+        }
 
         mAuth = FirebaseAuth.getInstance();
     }

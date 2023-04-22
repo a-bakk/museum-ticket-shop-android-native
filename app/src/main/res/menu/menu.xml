@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/exhibitionsMenuItem"
+        android:title="@string/exhibitions" />
+    <item
+        android:id="@+id/buyTicketsMenuItem"
+        android:title="@string/buy_tickets" />
+    <item
+        android:id="@+id/authenticationMenuItem"
+        android:title="@string/authentication" />
+    <item
+        android:id="@+id/logoutMenuItem"
+        android:title="@string/logout" />
+</menu>

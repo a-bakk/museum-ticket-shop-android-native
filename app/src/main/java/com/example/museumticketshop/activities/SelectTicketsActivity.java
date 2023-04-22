@@ -2,14 +2,20 @@ package com.example.museumticketshop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +23,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class SelectTicketsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
-
+    private static final Long SECRET_KEY = 89534634862L;
     private Spinner numberOfFullPriceTicketsSpinner;
     private Spinner numberOfHalfPriceTicketsSpinner;
     private Spinner chooseExhibitionSpinner;
@@ -30,6 +37,13 @@ public class SelectTicketsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_tickets);
+
+        if (!Objects.equals(getIntent().getLongExtra("secretKey", 0L),
+                8376985473L) || // redirected from MainActivity
+           !Objects.equals(getIntent().getLongExtra("secretKey", 0L),
+                        852195325434L)) { // redirected from LoginActivity
+            finish();
+        }
 
         numberOfFullPriceTicketsSpinner = findViewById(R.id.chooseNumberOfFullPriceTickets);
         numberOfHalfPriceTicketsSpinner = findViewById(R.id.chooseNumberOfHalfPriceTickets);
@@ -101,5 +115,46 @@ public class SelectTicketsActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         // TODO
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.exhibitionsMenuItem:
+                redirectToMain();
+                break;
+            case R.id.authenticationMenuItem:
+                redirectToLogin();
+                break;
+            case R.id.buyTicketsMenuItem:
+                // do nothing as we're already here
+                break;
+            case R.id.logoutMenuItem:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
+            default: return super.onOptionsItemSelected(menuItem);
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void redirectToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("secretKey", SECRET_KEY);
+        startActivity(intent);
+    }
+
+    public void redirectToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("secretKey", SECRET_KEY);
+        startActivity(intent);
     }
 }

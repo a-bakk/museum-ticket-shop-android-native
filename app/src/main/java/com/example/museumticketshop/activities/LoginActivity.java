@@ -2,13 +2,17 @@ package com.example.museumticketshop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -38,6 +42,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (!Objects.equals(getIntent().getLongExtra("secretKey", 0L),
+                8376985473L) || // redirected from MainActivity
+            !Objects.equals(getIntent().getLongExtra("secretKey", 0),
+                    89534634862L)) { // redirected from SelectTicketsActivity
+            finish();
+        }
 
         sharedPreferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
@@ -116,6 +127,48 @@ public class LoginActivity extends AppCompatActivity {
 
     public void redirectToRegister(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
+        intent.putExtra("secretKey", SECRET_KEY);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.exhibitionsMenuItem:
+                redirectToMain();
+                break;
+            case R.id.authenticationMenuItem:
+                // do nothing as we're already here
+                break;
+            case R.id.buyTicketsMenuItem:
+                redirectToTickets();
+                break;
+            case R.id.logoutMenuItem:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                break;
+            default: return super.onOptionsItemSelected(menuItem);
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    public void redirectToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("secretKey", SECRET_KEY);
+        startActivity(intent);
+    }
+
+    private void redirectToTickets() {
+        // TODO: check if user is authenticated
+        Intent intent = new Intent(this, SelectTicketsActivity.class);
         intent.putExtra("secretKey", SECRET_KEY);
         startActivity(intent);
     }
