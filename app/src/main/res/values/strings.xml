@@ -18,4 +18,24 @@
     <string name="placeholder">placeholder</string>
     <string name="profile">Profile</string>
     <string name="my_tickets">My tickets</string>
+    <string name="buy_tickets">Buy Tickets</string>
+    <string name="choose_exhibition">Choose exhibition</string>
+    <string name="number_of_full_price_tickets_adults">Number of full price tickets (adults)</string>
+    <string name="number_of_half_price_tickets_students_seniors">Number of half price tickets (students/seniors)</string>
+    <string name="_40_ticket">(40 € / ticket)</string>
+    <string name="_20_ticket">(20 € / ticket)</string>
+    <string name="choose_the_date">Choose the date</string>
+    <string name="choose_the_day_for_the_exhibiton">Choose the day for the exhibiton</string>
+    <string name="order_tickets">Order tickets</string>
+    <string name="choose_an_exhibition_from_the_available_ones">Choose an exhibition from the available ones</string>
+    <string name="choose_how_many_full_price_tickets_you_d_like">Choose how many full price tickets you\'d like</string>
+    <string name="choose_how_many_half_price_tickets_you_d_like">Choose how many half price tickets you\'d like</string>
+    <string-array name="number_of_tickets">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

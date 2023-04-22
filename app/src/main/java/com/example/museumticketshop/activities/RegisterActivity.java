@@ -12,7 +12,7 @@ import com.example.museumticketshop.R;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
-    private static final String PREF_KEY = Objects.requireNonNull(LoginActivity.class.getPackage(),
+    private static final String PREF_KEY = Objects.requireNonNull(RegisterActivity.class.getPackage(),
                     "Error happened during loading package name for RegisterActivity")
             .toString();
     private static final String VALUE_DOES_NOT_EXIST = "default value";
