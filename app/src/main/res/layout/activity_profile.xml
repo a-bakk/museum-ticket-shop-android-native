@@ -76,34 +76,6 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184">
-
-        <TextView
-            android:id="@+id/profileBaseText3"
-            android:layout_width="34dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/address"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/profileAddressPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/placeholder"
-            android:textSize="13sp" />
-    </LinearLayout>
-
     <TextView
         android:id="@+id/profileBaseMyTickets"
         android:layout_width="120dp"
@@ -115,6 +87,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintVertical_bias="0.204" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

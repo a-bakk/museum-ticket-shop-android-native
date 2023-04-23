@@ -1,21 +1,21 @@
 package com.example.museumticketshop.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.museumticketshop.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String PREF_KEY = Objects.requireNonNull(RegisterActivity.class.getPackage(),
@@ -24,7 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String VALUE_DOES_NOT_EXIST = "default value";
     private EditText nameET;
     private EditText emailAddressET;
-    private EditText addressET;
     private EditText passwordET;
     private EditText rePasswordET;
     private FirebaseAuth mAuth;
@@ -41,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         nameET = findViewById(R.id.registerName);
         emailAddressET = findViewById(R.id.registerEmailAddress);
-        addressET = findViewById(R.id.registerAddress);
         passwordET = findViewById(R.id.registerPassword);
         rePasswordET = findViewById(R.id.registerRePassword);
 
@@ -58,27 +56,27 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String firstName = extractStringFromEditText(nameET);
+        String name = extractStringFromEditText(nameET);
         String emailAddress = extractStringFromEditText(emailAddressET);
-        String streetAndNumber = extractStringFromEditText(addressET);
         String rawPassword = extractStringFromEditText(passwordET);
         String rawRePassword = extractStringFromEditText(rePasswordET);
 
-        // TODO: get it out of here
-        mAuth.createUserWithEmailAndPassword(emailAddress, rawPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // TODO: redirect to buy tickets
-                        } else {
-                            Toast.makeText(RegisterActivity.this,
-                                    "Problem with creating user", Toast.LENGTH_LONG).show();
-                            // task.getException().getMessage();
-                        }
-                    }
-                });
-
+        String[] required = new String[] {
+                name, emailAddress, rawPassword, rawRePassword
+        };
+        if (!checkForEmptyString(required)) {
+            Toast.makeText(this, "One of the fields is empty!",
+                    Toast.LENGTH_LONG).show();
+        }
+        if (!isValidEmail(emailAddress)) {
+            Toast.makeText(this, "Email address is invalid!",
+                    Toast.LENGTH_LONG).show();
+        }
+        if (!Objects.equals(rawPassword, rawRePassword)) {
+            Toast.makeText(this, "Passwords do not match!",
+                    Toast.LENGTH_LONG).show();
+        }
+        registerUser(name, emailAddress, rawPassword);
     }
 
     public void redirectToLogin(View view) {
@@ -89,5 +87,42 @@ public class RegisterActivity extends AppCompatActivity {
         return editText == null ? "" : editText.getText().toString();
     }
 
-//    private AuthResult registerNewUser();
+    private void registerUser(String name, String email, String password) {
+        // set the name with a UserProfileChangeRequest
+        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name).build();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            user.updateProfile(profileChangeRequest);
+                            startActivity(new Intent(this, ProfileActivity.class));
+                        } else {
+                            Toast.makeText(RegisterActivity.this,
+                                    "Problem with creating user", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(RegisterActivity.this,
+                                "Problem with creating user", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z\\d_+&*-]+(?:\\.[a-zA-Z\\d_+&*-]+)*@(?:[a-zA-Z\\d-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+    private boolean checkForEmptyString(String[] args) {
+        for (String str : args) {
+            if (str.isEmpty())
+                return true;
+        }
+        return false;
+    }
 }
