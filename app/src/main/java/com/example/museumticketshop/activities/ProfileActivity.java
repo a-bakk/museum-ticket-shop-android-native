@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ProfileActivity extends AppCompatActivity {
     private TextView profileNameET;
     private TextView emailAddressET;
-    private TextView addressET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         profileNameET = findViewById(R.id.profileNamePlaceholder);
         emailAddressET = findViewById(R.id.profileEmailAddressPlaceholder);
-        addressET = findViewById(R.id.profileAddressPlaceholder);
     }
 
     @Override

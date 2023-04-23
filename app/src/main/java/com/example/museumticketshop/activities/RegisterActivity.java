@@ -64,17 +64,20 @@ public class RegisterActivity extends AppCompatActivity {
         String[] required = new String[] {
                 name, emailAddress, rawPassword, rawRePassword
         };
-        if (!checkForEmptyString(required)) {
+        if (checkForEmptyString(required)) {
             Toast.makeText(this, "One of the fields is empty!",
                     Toast.LENGTH_LONG).show();
+            return;
         }
         if (!isValidEmail(emailAddress)) {
             Toast.makeText(this, "Email address is invalid!",
                     Toast.LENGTH_LONG).show();
+            return;
         }
         if (!Objects.equals(rawPassword, rawRePassword)) {
             Toast.makeText(this, "Passwords do not match!",
                     Toast.LENGTH_LONG).show();
+            return;
         }
         registerUser(name, emailAddress, rawPassword);
     }
