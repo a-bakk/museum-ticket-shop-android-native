@@ -12,18 +12,35 @@ import android.widget.TextView;
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
+
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView profileNameET;
-    private TextView emailAddressET;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profileNameET = findViewById(R.id.profileNamePlaceholder);
-        emailAddressET = findViewById(R.id.profileEmailAddressPlaceholder);
+        TextView profileNameET = findViewById(R.id.profileNamePlaceholder);
+        TextView emailAddressET = findViewById(R.id.profileEmailAddressPlaceholder);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null)
+            finish();
+        else {
+            List<? extends UserInfo> providerData = user.getProviderData();
+            if (providerData.stream()
+                    .anyMatch(i -> GoogleAuthProvider.PROVIDER_ID.equals(i.getProviderId()))) {
+                profileNameET.setText(R.string.google_authentication);
+            } else {
+                profileNameET.setText(user.getDisplayName());
+            }
+            emailAddressET.setText(user.getEmail());
+        }
     }
 
     @Override

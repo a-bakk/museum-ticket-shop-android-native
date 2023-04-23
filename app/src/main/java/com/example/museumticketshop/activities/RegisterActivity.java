@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
                     "Error happened during loading package name for RegisterActivity")
             .toString();
     private static final String VALUE_DOES_NOT_EXIST = "default value";
+    private static final String TAG = RegisterActivity.class.getName();
     private EditText nameET;
     private EditText emailAddressET;
     private EditText passwordET;
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         String rawPassword = extractStringFromEditText(passwordET);
         String rawRePassword = extractStringFromEditText(rePasswordET);
 
-        String[] required = new String[] {
+        String[] required = new String[]{
                 name, emailAddress, rawPassword, rawRePassword
         };
         if (checkForEmptyString(required)) {
@@ -100,8 +101,15 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            user.updateProfile(profileChangeRequest);
-                            startActivity(new Intent(this, ProfileActivity.class));
+                            user.updateProfile(profileChangeRequest)
+                                    .addOnSuccessListener(unused -> {
+                                        startActivity(new Intent(RegisterActivity.this,
+                                                ProfileActivity.class));
+                                    }).addOnFailureListener(unused -> {
+                                        Toast.makeText(RegisterActivity.this,
+                                                "Problem with creating user",
+                                                Toast.LENGTH_LONG).show();
+                                    });
                         } else {
                             Toast.makeText(RegisterActivity.this,
                                     "Problem with creating user", Toast.LENGTH_LONG).show();
