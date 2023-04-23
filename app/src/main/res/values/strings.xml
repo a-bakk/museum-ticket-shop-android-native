@@ -46,4 +46,9 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <array name="exhibition_images">
+        <item>@drawable/beyond_the_horizon</item>
+        <item>@drawable/innovations_in_science</item>
+        <item>@drawable/the_art_of_illusion</item>
+    </array>
 </resources>

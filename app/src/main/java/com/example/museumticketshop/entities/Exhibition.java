@@ -3,7 +3,7 @@ public class Exhibition {
     private String id;
     private String name;
     private String description;
-    private String picture;
+    private int imageResource;
 
     public String getId() {
         return id;
@@ -17,18 +17,14 @@ public class Exhibition {
         return description;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
     public Exhibition() {
     }
 
-    public Exhibition(String id, String name, String description, String picture) {
+    public Exhibition(String id, String name, String description, int imageResource) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.picture = picture;
+        this.imageResource = imageResource;
     }
 
     public void setId(String id) {
@@ -43,7 +39,11 @@ public class Exhibition {
         this.description = description;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public int getImageResource() {
+        return imageResource;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 }

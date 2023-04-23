@@ -2,10 +2,12 @@ package com.example.museumticketshop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,27 +16,58 @@ import android.view.MenuItem;
 import com.example.museumticketshop.activities.LoginActivity;
 import com.example.museumticketshop.activities.ProfileActivity;
 import com.example.museumticketshop.activities.SelectTicketsActivity;
+import com.example.museumticketshop.adapters.ExhibitionAdapter;
 import com.example.museumticketshop.entities.Exhibition;
 import com.example.museumticketshop.repositories.ExhibitionDao;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private RecyclerView exhibitionRecyclerView;
-//    private ArrayList<Exhibition> exhibitionList;
-//    private ExhibitionAdapter exhibitionAdapter;
+    private List<Exhibition> exhibitionList;
+    private ExhibitionAdapter exhibitionAdapter;
+    private ExhibitionDao exhibitionDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        exhibitionDao = ExhibitionDao.getInstance();
+
+        exhibitionRecyclerView = findViewById(R.id.exhibitionRecyclerView);
+        exhibitionRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        exhibitionList = new ArrayList<>();
+        exhibitionAdapter = new ExhibitionAdapter(this, exhibitionList);
+        exhibitionRecyclerView.setAdapter(exhibitionAdapter);
+
+        getExhibitionsListWithImages();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void getExhibitionsListWithImages() {
+        exhibitionList.clear();
+
+        Task<List<Exhibition>> task = exhibitionDao.getAllExhibitions();
+        task.addOnSuccessListener(exhibitions -> {
+            exhibitionList.addAll(exhibitions);
+
+            int idx = 0;
+            TypedArray imageResources = getResources().obtainTypedArray(R.array.exhibition_images);
+            for (Exhibition res : exhibitionList) {
+                res.setImageResource(imageResources.getResourceId(idx++, 0));
+            }
+
+            imageResources.recycle();
+            exhibitionAdapter.notifyDataSetChanged();
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Exhibitions could not be loaded!");
+        });
     }
 
     @Override
