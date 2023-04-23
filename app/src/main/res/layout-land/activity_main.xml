@@ -22,14 +22,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exhibitionRecyclerView"
-        android:layout_width="413dp"
-        android:layout_height="637dp"
+        android:layout_width="708dp"
+        android:layout_height="226dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.826" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

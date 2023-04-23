@@ -30,10 +30,10 @@
         <TextView
             android:id="@+id/exhibitionDescription"
             android:layout_width="match_parent"
-            android:layout_height="149dp"
+            android:layout_height="82dp"
             android:layout_marginTop="4dp"
-            android:textSize="15sp"
-            android:text="@string/description_placeholder" />
+            android:text="@string/description_placeholder"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/exhibitionBaseText"
