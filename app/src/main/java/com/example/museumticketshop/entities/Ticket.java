@@ -5,7 +5,7 @@ import java.util.Date;
 public class Ticket {
     private String id;
     private Long price;
-    private TicketType ticketType;
+    private String ticketType;
     private Date date;
     private String userEmail;
     private String exhibitionId;
@@ -18,7 +18,7 @@ public class Ticket {
         this.price = price;
     }
 
-    public void setTicketType(TicketType ticketType) {
+    public void setTicketType(String ticketType) {
         this.ticketType = ticketType;
     }
 
@@ -42,7 +42,7 @@ public class Ticket {
         return price;
     }
 
-    public TicketType getTicketType() {
+    public String getTicketType() {
         return ticketType;
     }
 
@@ -61,7 +61,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String id, Long price, TicketType ticketType, Date date, String userEmail, String exhibitionId) {
+    public Ticket(String id, Long price, String ticketType, Date date, String userEmail, String exhibitionId) {
         this.id = id;
         this.price = price;
         this.ticketType = ticketType;
