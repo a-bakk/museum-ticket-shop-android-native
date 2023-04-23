@@ -15,35 +15,35 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
+        android:layout_width="182dp"
+        android:layout_height="74dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143">
+        app:layout_constraintVertical_bias="0.231">
 
         <TextView
             android:id="@+id/profileBaseText1"
-            android:layout_width="34dp"
-            android:layout_height="wrap_content"
+            android:layout_width="66dp"
+            android:layout_height="13dp"
             android:layout_weight="1"
             android:text="@string/name"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profileNamePlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
             android:layout_weight="1"
             android:text="@string/placeholder"
             android:textSize="13sp" />
@@ -51,19 +51,19 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
+        android:layout_width="184dp"
+        android:layout_height="75dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.997"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143">
+        app:layout_constraintVertical_bias="0.532">
 
         <TextView
             android:id="@+id/profileBaseText2"
-            android:layout_width="34dp"
+            android:layout_width="134dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/email_address"
@@ -71,8 +71,8 @@
 
         <TextView
             android:id="@+id/profileEmailAddressPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
             android:layout_weight="1"
             android:text="@string/placeholder"
             android:textSize="13sp" />
@@ -80,85 +80,28 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
+        android:layout_width="181dp"
+        android:layout_height="77dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247">
+        app:layout_constraintVertical_bias="0.832">
 
         <TextView
             android:id="@+id/profileBaseText3"
-            android:layout_width="34dp"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/street_number"
+            android:text="@string/address"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/profileStreetAndNumberPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/placeholder"
-            android:textSize="13sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.997"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247">
-
-        <TextView
-            android:id="@+id/profileBaseText4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/city"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/profileCityPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/placeholder"
-            android:textSize="13sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="357dp"
-        android:layout_height="27dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343">
-
-        <TextView
-            android:id="@+id/profileBaseText5"
-            android:layout_width="34dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/postal_code"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/profilePostalCodePlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/profileAddress"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:text="@string/placeholder"
             android:textSize="13sp" />
@@ -166,13 +109,15 @@
 
     <TextView
         android:id="@+id/profileBaseMyTickets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="38dp"
         android:text="@string/my_tickets"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.685"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443" />
+        app:layout_constraintVertical_bias="0.042" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

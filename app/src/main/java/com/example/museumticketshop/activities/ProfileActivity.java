@@ -7,17 +7,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
+    private TextView profileNameET;
+    private TextView emailAddressET;
+    private TextView addressET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        profileNameET = findViewById(R.id.profileNamePlaceholder);
+        emailAddressET = findViewById(R.id.profileEmailAddressPlaceholder);
+        addressET = findViewById(R.id.profileAddressPlaceholder);
     }
 
     @Override

@@ -38,6 +38,7 @@
     <string name="login_with_google">Login with Google</string>
     <string name="logout">Logout</string>
     <string name="exhibitions">Exhibitions</string>
+    <string name="address">Address</string>
     <string-array name="number_of_tickets">
         <item>0</item>
         <item>1</item>

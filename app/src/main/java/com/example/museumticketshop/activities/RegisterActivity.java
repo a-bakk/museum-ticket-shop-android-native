@@ -22,12 +22,9 @@ public class RegisterActivity extends AppCompatActivity {
                     "Error happened during loading package name for RegisterActivity")
             .toString();
     private static final String VALUE_DOES_NOT_EXIST = "default value";
-    private EditText firstNameET;
-    private EditText lastNameET;
+    private EditText nameET;
     private EditText emailAddressET;
-    private EditText streetAndNumberET;
-    private EditText cityET;
-    private EditText postalCodeET;
+    private EditText addressET;
     private EditText passwordET;
     private EditText rePasswordET;
     private FirebaseAuth mAuth;
@@ -42,12 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
-        firstNameET = findViewById(R.id.registerFirstName);
-        lastNameET = findViewById(R.id.registerLastName);
+        nameET = findViewById(R.id.registerName);
         emailAddressET = findViewById(R.id.registerEmailAddress);
-        streetAndNumberET = findViewById(R.id.registerStreetAndNumber);
-        cityET = findViewById(R.id.registerCity);
-        postalCodeET = findViewById(R.id.registerPostalCode);
+        addressET = findViewById(R.id.registerAddress);
         passwordET = findViewById(R.id.registerPassword);
         rePasswordET = findViewById(R.id.registerRePassword);
 
@@ -64,12 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String firstName = extractStringFromEditText(firstNameET);
-        String lastName = extractStringFromEditText(lastNameET);
+        String firstName = extractStringFromEditText(nameET);
         String emailAddress = extractStringFromEditText(emailAddressET);
-        String streetAndNumber = extractStringFromEditText(streetAndNumberET);
-        String city = extractStringFromEditText(cityET);
-        String postalCode = extractStringFromEditText(postalCodeET);
+        String streetAndNumber = extractStringFromEditText(addressET);
         String rawPassword = extractStringFromEditText(passwordET);
         String rawRePassword = extractStringFromEditText(rePasswordET);
 
@@ -91,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void redirectToLogin(View view) {
-        // TODO: might need to change to intent
         finish();
     }
 
