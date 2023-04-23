@@ -13,6 +13,7 @@ import com.example.museumticketshop.activities.LoginActivity;
 import com.example.museumticketshop.activities.ProfileActivity;
 import com.example.museumticketshop.activities.SelectTicketsActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -20,10 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView exhibitionRecyclerView;
 //    private ArrayList<Exhibiton> exhibitionList;
 //    private ExhibitionAdapter exhibitionAdapter;
+    private FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = FirebaseFirestore.getInstance();
     }
 
     @Override
