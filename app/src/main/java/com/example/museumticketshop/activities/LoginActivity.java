@@ -43,13 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (!Objects.equals(getIntent().getLongExtra("secretKey", 0L),
-                8376985473L) || // redirected from MainActivity
-            !Objects.equals(getIntent().getLongExtra("secretKey", 0),
-                    89534634862L)) { // redirected from SelectTicketsActivity
-            finish();
-        }
-
         sharedPreferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
         emailAddressET = findViewById(R.id.loginEmailAddress);
@@ -141,35 +134,26 @@ public class LoginActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        // not using secret key as "important" pages require authentication
         switch (menuItem.getItemId()) {
             case R.id.exhibitionsMenuItem:
-                redirectToMain();
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.buyTicketsMenuItem:
+                startActivity(new Intent(this, SelectTicketsActivity.class));
                 break;
             case R.id.authenticationMenuItem:
                 // do nothing as we're already here
                 break;
-            case R.id.buyTicketsMenuItem:
-                redirectToTickets();
+            case R.id.profileMenuItem:
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
-                finish();
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
-    }
-
-    public void redirectToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
-    }
-
-    private void redirectToTickets() {
-        // TODO: check if user is authenticated
-        Intent intent = new Intent(this, SelectTicketsActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
     }
 }

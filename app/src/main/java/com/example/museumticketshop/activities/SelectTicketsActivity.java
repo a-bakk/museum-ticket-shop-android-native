@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class SelectTicketsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
-    private static final Long SECRET_KEY = 89534634862L;
     private Spinner numberOfFullPriceTicketsSpinner;
     private Spinner numberOfHalfPriceTicketsSpinner;
     private Spinner chooseExhibitionSpinner;
@@ -37,13 +37,6 @@ public class SelectTicketsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_tickets);
-
-        if (!Objects.equals(getIntent().getLongExtra("secretKey", 0L),
-                8376985473L) || // redirected from MainActivity
-           !Objects.equals(getIntent().getLongExtra("secretKey", 0L),
-                        852195325434L)) { // redirected from LoginActivity
-            finish();
-        }
 
         numberOfFullPriceTicketsSpinner = findViewById(R.id.chooseNumberOfFullPriceTickets);
         numberOfHalfPriceTicketsSpinner = findViewById(R.id.chooseNumberOfHalfPriceTickets);
@@ -62,7 +55,7 @@ public class SelectTicketsActivity extends AppCompatActivity
         numberOfHalfPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
         numberOfFullPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
 
-        // TODO: dinamically deal with this
+        // TODO: dynamically deal with this
         List<String> placeholderExhibs = new ArrayList<>();
         placeholderExhibs.add("1: A");
         placeholderExhibs.add("2: B");
@@ -87,7 +80,7 @@ public class SelectTicketsActivity extends AppCompatActivity
         String ticketDateString = ticketDateET.getText().toString();
         Date ticketDate;
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             ticketDate = format.parse(ticketDateString);
         } catch (ParseException e) {
             ticketDate = Calendar.getInstance().getTime();
@@ -127,34 +120,26 @@ public class SelectTicketsActivity extends AppCompatActivity
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        // not using secret key as "important" pages require authentication
         switch (menuItem.getItemId()) {
             case R.id.exhibitionsMenuItem:
-                redirectToMain();
-                break;
-            case R.id.authenticationMenuItem:
-                redirectToLogin();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.buyTicketsMenuItem:
                 // do nothing as we're already here
                 break;
+            case R.id.authenticationMenuItem:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.profileMenuItem:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
-                finish();
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
-    }
-
-    private void redirectToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
-    }
-
-    public void redirectToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
     }
 }

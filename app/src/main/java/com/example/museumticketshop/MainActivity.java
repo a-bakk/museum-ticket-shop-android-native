@@ -10,13 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.museumticketshop.activities.LoginActivity;
+import com.example.museumticketshop.activities.ProfileActivity;
 import com.example.museumticketshop.activities.SelectTicketsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private static final Long SECRET_KEY = 8376985473L;
     private RecyclerView exhibitionRecyclerView;
 //    private ArrayList<Exhibiton> exhibitionList;
 //    private ExhibitionAdapter exhibitionAdapter;
@@ -24,13 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (!Objects.equals(getIntent().getLongExtra("secretKey", 0L),
-                852195325434L) || // redirected from LoginActivity
-            !Objects.equals(getIntent().getLongExtra("secretKey", 0),
-                    89534634862L)) { // redirected from SelectTicketsActivity
-            finish();
-        }
     }
 
     @Override
@@ -43,35 +36,27 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        // not using secret key as "important" pages require authentication
         switch (menuItem.getItemId()) {
-            case R.id.exhibitionsMenuItem: // do nothing as we're already here
-                break;
-            case R.id.authenticationMenuItem:
-                redirectToLogin();
+            case R.id.exhibitionsMenuItem:
+                // do nothing as we're already here
                 break;
             case R.id.buyTicketsMenuItem:
-                redirectToTickets();
+                startActivity(new Intent(this, SelectTicketsActivity.class));
+                break;
+            case R.id.authenticationMenuItem:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.profileMenuItem:
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
-                finish();
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
-    }
-
-    private void redirectToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
-    }
-
-    private void redirectToTickets() {
-        // TODO: check if user is authenticated
-        Intent intent = new Intent(this, SelectTicketsActivity.class);
-        intent.putExtra("secretKey", SECRET_KEY);
-        startActivity(intent);
     }
 
 }

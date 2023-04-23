@@ -12,10 +12,10 @@
         android:theme="@style/Theme.MuseumTicketShop"
         tools:targetApi="31">
         <activity
-            android:name=".SelectTicketsActivity"
+            android:name=".activities.SelectTicketsActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"

@@ -11,6 +11,9 @@
         android:id="@+id/authenticationMenuItem"
         android:title="@string/authentication" />
     <item
+        android:id="@+id/profileMenuItem"
+        android:title="@string/profile" />
+    <item
         android:id="@+id/logoutMenuItem"
         android:title="@string/logout" />
 </menu>
