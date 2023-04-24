@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.museumticketshop.activities.LoginActivity;
@@ -120,4 +121,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, clazz));
     }
 
+    // from listing, make all of the buttons point to the same view
+    public void redirectToBuyTickets(View view) {
+        checkForAuthenticationAndRedirect(SelectTicketsActivity.class);
+    }
 }
