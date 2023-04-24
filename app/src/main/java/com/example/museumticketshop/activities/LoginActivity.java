@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                // TODO: redirect to tickets
+                checkForAuthenticationAndRedirect(ProfileActivity.class);
             } else {
                 Toast.makeText(LoginActivity.this,
                         "Authentication with Google unsuccessful!",
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(emailAddress, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // TODO: redirect to tickets
+                        checkForAuthenticationAndRedirect(ProfileActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this,
                                 "Authentication unsuccessful! Double check your details or " +
