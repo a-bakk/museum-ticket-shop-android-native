@@ -16,6 +16,11 @@ import android.widget.Toast;
 
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
+import com.example.museumticketshop.adapters.ExhibitionArrayAdapter;
+import com.example.museumticketshop.entities.Exhibition;
+import com.example.museumticketshop.repositories.ExhibitionDao;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -59,18 +64,14 @@ public class SelectTicketsActivity extends AppCompatActivity
 
         numberOfHalfPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
         numberOfFullPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
-
-        // TODO: dynamically deal with this
-        List<String> placeholderExhibs = new ArrayList<>();
-        placeholderExhibs.add("1: A");
-        placeholderExhibs.add("2: B");
-
-        ArrayAdapter<String> exhibitionsAdapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                        placeholderExhibs);
-        exhibitionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        chooseExhibitionSpinner.setAdapter(exhibitionsAdapter);
+        
+        ExhibitionDao.getInstance()
+                .getAllExhibitions().addOnSuccessListener(exhibitions -> {
+           ArrayAdapter<Exhibition> exhibitionArrayAdapter = new ExhibitionArrayAdapter(this,
+                   exhibitions);
+           chooseExhibitionSpinner.setAdapter(exhibitionArrayAdapter);
+           chooseExhibitionSpinner.setOnItemSelectedListener(this);
+        });
 
         ticketDateET = findViewById(R.id.buyTicketDate);
     }
