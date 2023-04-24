@@ -22,6 +22,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
@@ -140,13 +141,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.buyTicketsMenuItem:
-                startActivity(new Intent(this, SelectTicketsActivity.class));
+                checkForAuthenticationAndRedirect(SelectTicketsActivity.class);
                 break;
             case R.id.authenticationMenuItem:
                 // do nothing as we're already here
                 break;
             case R.id.profileMenuItem:
-                startActivity(new Intent(this, ProfileActivity.class));
+                checkForAuthenticationAndRedirect(ProfileActivity.class);
                 break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
@@ -155,5 +156,18 @@ public class LoginActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private <T extends AppCompatActivity>
+    void checkForAuthenticationAndRedirect(Class<T> clazz) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "This feature requires authentication!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        startActivity(new Intent(this, clazz));
     }
 }

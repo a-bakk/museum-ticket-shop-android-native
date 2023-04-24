@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.museumticketshop.activities.LoginActivity;
 import com.example.museumticketshop.activities.ProfileActivity;
@@ -23,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,13 +90,13 @@ public class MainActivity extends AppCompatActivity {
                 // do nothing as we're already here
                 break;
             case R.id.buyTicketsMenuItem:
-                startActivity(new Intent(this, SelectTicketsActivity.class));
+                checkForAuthenticationAndRedirect(SelectTicketsActivity.class);
                 break;
             case R.id.authenticationMenuItem:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.profileMenuItem:
-                startActivity(new Intent(this, ProfileActivity.class));
+                checkForAuthenticationAndRedirect(ProfileActivity.class);
                 break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
@@ -101,6 +105,19 @@ public class MainActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    // can't make it static even if I pass the context as argument; going to have to be copied
+    private <T extends AppCompatActivity>
+        void checkForAuthenticationAndRedirect(Class<T> clazz) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "This feature requires authentication!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        startActivity(new Intent(this, clazz));
     }
 
 }

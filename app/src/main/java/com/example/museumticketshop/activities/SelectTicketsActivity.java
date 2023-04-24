@@ -12,10 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class SelectTicketsActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
@@ -37,6 +38,10 @@ public class SelectTicketsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_tickets);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null)
+            finish();
 
         numberOfFullPriceTicketsSpinner = findViewById(R.id.chooseNumberOfFullPriceTickets);
         numberOfHalfPriceTicketsSpinner = findViewById(R.id.chooseNumberOfHalfPriceTickets);
@@ -132,7 +137,7 @@ public class SelectTicketsActivity extends AppCompatActivity
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.profileMenuItem:
-                startActivity(new Intent(this, ProfileActivity.class));
+                checkForAuthenticationAndRedirect();
                 break;
             case R.id.logoutMenuItem:
                 FirebaseAuth.getInstance().signOut();
@@ -141,5 +146,17 @@ public class SelectTicketsActivity extends AppCompatActivity
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void checkForAuthenticationAndRedirect() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "This feature requires authentication!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        startActivity(new Intent(this, ProfileActivity.class));
     }
 }

@@ -8,15 +8,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserInfo;
-
-import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     @Override
@@ -32,9 +30,10 @@ public class ProfileActivity extends AppCompatActivity {
         if (user == null)
             finish();
         else {
-            List<? extends UserInfo> providerData = user.getProviderData();
-            if (providerData.stream()
+            if (user.getProviderData().stream()
                     .anyMatch(i -> GoogleAuthProvider.PROVIDER_ID.equals(i.getProviderId()))) {
+                // if user is authenticated via google, we do not know their name
+                // (ig we could but whatever)
                 profileNameET.setText(R.string.google_authentication);
             } else {
                 profileNameET.setText(user.getDisplayName());
@@ -59,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.buyTicketsMenuItem:
-                startActivity(new Intent(this, SelectTicketsActivity.class));
+                checkForAuthenticationAndRedirect();
                 break;
             case R.id.authenticationMenuItem:
                 startActivity(new Intent(this, LoginActivity.class));
@@ -74,5 +73,17 @@ public class ProfileActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(menuItem);
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void checkForAuthenticationAndRedirect() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "This feature requires authentication!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        startActivity(new Intent(this, SelectTicketsActivity.class));
     }
 }
