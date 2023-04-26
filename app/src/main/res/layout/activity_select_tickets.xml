@@ -16,33 +16,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
+        app:layout_constraintVertical_bias="0.038" />
 
     <Spinner
         android:id="@+id/chooseExhibition"
         android:layout_width="344dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/choose_an_exhibition_from_the_available_ones"
         android:tag="exhibition"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.201"
-        android:contentDescription="@string/choose_an_exhibition_from_the_available_ones" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <Spinner
         android:id="@+id/chooseNumberOfFullPriceTickets"
         android:layout_width="101dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/choose_how_many_full_price_tickets_you_d_like"
         android:tag="full_price_tickets"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.319"
-        android:contentDescription="@string/choose_how_many_full_price_tickets_you_d_like" />
+        app:layout_constraintVertical_bias="0.341" />
 
     <Spinner
         android:id="@+id/chooseNumberOfHalfPriceTickets"
@@ -55,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
         android:id="@+id/button"
@@ -67,27 +67,23 @@
         app:backgroundTint="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726"
+        app:layout_constraintVertical_bias="0.903"
         tools:ignore="UsingOnClickInXml" />
 
-    <EditText
-        android:id="@+id/buyTicketDate"
-        android:layout_width="266dp"
-        android:layout_height="48dp"
-        android:autofillHints="date"
-        android:ems="10"
-        android:hint="@string/choose_the_day_for_the_exhibiton"
-        android:inputType="date"
+    <DatePicker
+        android:id="@+id/buyTicketDatePicker"
+        android:layout_width="267dp"
+        android:layout_height="146dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buyTicketsBaseText7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.608" />
+        app:layout_constraintVertical_bias="0.774" />
 
     <TextView
         android:id="@+id/buyTicketsBaseText2"
@@ -99,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintVertical_bias="0.134" />
 
     <TextView
         android:id="@+id/buyTicketsBaseText3"
@@ -123,7 +119,7 @@
         app:layout_constraintHorizontal_bias="0.279"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.393" />
+        app:layout_constraintVertical_bias="0.422" />
 
     <TextView
         android:id="@+id/buyTicketsBaseText5"
@@ -132,10 +128,10 @@
         android:text="@string/_40_ticket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toEndOf="@+id/chooseNumberOfFullPriceTickets"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.328" />
+        app:layout_constraintVertical_bias="0.346" />
 
     <TextView
         android:id="@+id/buyTicketsBaseText6"
@@ -144,10 +140,9 @@
         android:text="@string/_20_ticket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toEndOf="@+id/chooseNumberOfHalfPriceTickets"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.459" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/buyTicketsBaseText7"
@@ -156,8 +151,8 @@
         android:text="@string/choose_the_date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537" />
+        app:layout_constraintVertical_bias="0.594" />
 </androidx.constraintlayout.widget.ConstraintLayout>

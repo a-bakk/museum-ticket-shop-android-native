@@ -1,5 +1,6 @@
 package com.example.museumticketshop.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -8,9 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,26 +18,24 @@ import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
 import com.example.museumticketshop.adapters.ExhibitionArrayAdapter;
 import com.example.museumticketshop.entities.Exhibition;
+import com.example.museumticketshop.entities.Ticket;
 import com.example.museumticketshop.repositories.ExhibitionDao;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.museumticketshop.repositories.TicketDao;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class SelectTicketsActivity extends AppCompatActivity
-        implements AdapterView.OnItemSelectedListener {
+public class SelectTicketsActivity extends AppCompatActivity {
     private Spinner numberOfFullPriceTicketsSpinner;
     private Spinner numberOfHalfPriceTicketsSpinner;
     private Spinner chooseExhibitionSpinner;
-    private EditText ticketDateET;
+    private DatePicker ticketDatePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +50,6 @@ public class SelectTicketsActivity extends AppCompatActivity
         numberOfHalfPriceTicketsSpinner = findViewById(R.id.chooseNumberOfHalfPriceTickets);
         chooseExhibitionSpinner = findViewById(R.id.chooseExhibition);
 
-        numberOfFullPriceTicketsSpinner.setOnItemSelectedListener(this);
-        numberOfHalfPriceTicketsSpinner.setOnItemSelectedListener(this);
-        chooseExhibitionSpinner.setOnItemSelectedListener(this);
-
         ArrayAdapter<CharSequence> numberOfTicketsAdapter =
                 ArrayAdapter.createFromResource(this, R.array.number_of_tickets,
                         android.R.layout.simple_spinner_item);
@@ -64,56 +58,73 @@ public class SelectTicketsActivity extends AppCompatActivity
 
         numberOfHalfPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
         numberOfFullPriceTicketsSpinner.setAdapter(numberOfTicketsAdapter);
-        
+
         ExhibitionDao.getInstance()
                 .getAllExhibitions().addOnSuccessListener(exhibitions -> {
            ArrayAdapter<Exhibition> exhibitionArrayAdapter = new ExhibitionArrayAdapter(this,
                    exhibitions);
            chooseExhibitionSpinner.setAdapter(exhibitionArrayAdapter);
-           chooseExhibitionSpinner.setOnItemSelectedListener(this);
         });
 
-        ticketDateET = findViewById(R.id.buyTicketDate);
+        ticketDatePicker = findViewById(R.id.buyTicketDatePicker);
     }
 
     public void buyTickets(View view) {
         String numberOfFullPriceTicketsAsString =
                 numberOfFullPriceTicketsSpinner.getSelectedItem().toString();
-        String numberOfHalfPriceTocketsAsString =
+        String numberOfHalfPriceTicketsAsString =
                 numberOfHalfPriceTicketsSpinner.getSelectedItem().toString();
-        String exhibitionAsString = chooseExhibitionSpinner.getSelectedItem().toString();
+        Exhibition exhibition = (Exhibition) chooseExhibitionSpinner.getSelectedItem();
 
-        String ticketDateString = ticketDateET.getText().toString();
-        Date ticketDate;
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            ticketDate = format.parse(ticketDateString);
-        } catch (ParseException e) {
-            ticketDate = Calendar.getInstance().getTime();
+        LocalDate ticketDate = LocalDate.of(
+            ticketDatePicker.getYear(),
+            ticketDatePicker.getMonth() + 1, // indexed by 0
+            ticketDatePicker.getDayOfMonth()
+        );
+
+        if (checkForEmptyString(new String[] {numberOfFullPriceTicketsAsString,
+                numberOfHalfPriceTicketsAsString}) || exhibition == null || ticketDate == null) {
+            Toast.makeText(this, "Ordering tickets was not successful!",
+                    Toast.LENGTH_LONG).show();
+            return; // shouldn't ever run as all things have default values
         }
 
+        int fullPrice = Integer.parseInt(numberOfFullPriceTicketsAsString);
+        int halfPrice = Integer.parseInt(numberOfHalfPriceTicketsAsString);
 
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch ((String) adapterView.getTag()) {
-            case "exhibition":
-                // TODO asd
-                break;
-            case "full_price_tickets":
-                // TODO
-                break;
-            case "half_price_tickets":
-                // TODO a
-                break;
-            default:
+        while (fullPrice > 0) {
+            createTicketTask(40L, "full price", ticketDate, exhibition.getId())
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Problem with ordering tickets!",
+                                Toast.LENGTH_LONG).show();
+                    });
+            fullPrice--;
         }
+
+        while (halfPrice > 0) {
+            createTicketTask(20L, "half price", ticketDate, exhibition.getId())
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Problem with ordering tickets!",
+                                Toast.LENGTH_LONG).show();
+            });
+            halfPrice--;
+        }
+
+        checkForAuthenticationAndRedirect();
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        // TODO
+    private Task<Void> createTicketTask(Long price, String ticketType, LocalDate date, String exhibitionId) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Ticket ticket = new Ticket();
+        ticket.setPrice(price);
+        ticket.setTicketType(ticketType);
+        ticket.setDate(formatter.format(date));
+        ticket.setExhibitionId(exhibitionId);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+            ticket.setUserEmail(user.getEmail());
+
+        return TicketDao.getInstance().createTicket(ticket);
     }
 
     @Override
@@ -157,7 +168,14 @@ public class SelectTicketsActivity extends AppCompatActivity
                     Toast.LENGTH_LONG).show();
             return;
         }
-
         startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private boolean checkForEmptyString(String[] args) {
+        for (String str : args) {
+            if (str.isEmpty())
+                return true;
+        }
+        return false;
     }
 }

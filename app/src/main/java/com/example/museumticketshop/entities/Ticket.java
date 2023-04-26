@@ -1,12 +1,10 @@
 package com.example.museumticketshop.entities;
 
-import java.util.Date;
-
 public class Ticket {
     private String id;
     private Long price;
     private String ticketType;
-    private Date date;
+    private String date; // can't store LocalDate, don't want to store Date ==> String
     private String userEmail;
     private String exhibitionId;
 
@@ -22,7 +20,7 @@ public class Ticket {
         this.ticketType = ticketType;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -46,7 +44,7 @@ public class Ticket {
         return ticketType;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -61,7 +59,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String id, Long price, String ticketType, Date date, String userEmail, String exhibitionId) {
+    public Ticket(String id, Long price, String ticketType, String date, String userEmail, String exhibitionId) {
         this.id = id;
         this.price = price;
         this.ticketType = ticketType;
