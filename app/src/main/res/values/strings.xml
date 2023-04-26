@@ -40,6 +40,8 @@
     <string name="exhibitions">Exhibitions</string>
     <string name="address">Address</string>
     <string name="google_authentication">Google Authentication</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
     <string-array name="number_of_tickets">
         <item>0</item>
         <item>1</item>

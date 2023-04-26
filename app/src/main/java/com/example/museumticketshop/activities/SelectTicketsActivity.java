@@ -1,6 +1,5 @@
 package com.example.museumticketshop.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -21,13 +20,10 @@ import com.example.museumticketshop.entities.Exhibition;
 import com.example.museumticketshop.entities.Ticket;
 import com.example.museumticketshop.repositories.ExhibitionDao;
 import com.example.museumticketshop.repositories.TicketDao;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
