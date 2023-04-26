@@ -45,6 +45,15 @@
     <string name="unknown">unknown</string>
     <string name="my_tickets_"><![CDATA[My tickets >]]></string>
     <string name="find_your_tickets_to_the_right">Find your tickets to the right</string>
+    <string name="modify_ticket_date">Modify ticket date</string>
+    <string name="ticked_id">Ticked id</string>
+    <string name="exhibition">Exhibition</string>
+    <string name="ticket_type">Ticket type</string>
+    <string name="current_date">Current date</string>
+    <string name="pick_a_new_date">Pick a new date</string>
+    <string name="back_to_profile">Back to profile</string>
+    <string name="modify_date">Modify date</string>
+    <string name="back_to_exhibitions">Back to exhibitions</string>
     <string-array name="number_of_tickets">
         <item>0</item>
         <item>1</item>

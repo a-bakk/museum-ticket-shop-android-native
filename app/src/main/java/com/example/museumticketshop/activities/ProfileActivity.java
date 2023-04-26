@@ -28,6 +28,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = ProfileActivity.class.getName();
+    private static final Long SECRET_KEY = 88437216746L;
     private List<Ticket> tickets;
     private TicketAdapter ticketAdapter;
     private TicketDao ticketDao;
@@ -65,6 +66,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (user != null)
             readTicketsForUser(user.getEmail());
+    }
+
+    public void redirectToTicketModification(String ticketId) {
+        Intent intent = new Intent(this, ModifyTicketActivity.class);
+        intent.putExtra("secretKey", SECRET_KEY);
+        intent.putExtra("currentTicketId", ticketId);
+        startActivity(intent);
     }
 
     @SuppressLint("NotifyDataSetChanged")

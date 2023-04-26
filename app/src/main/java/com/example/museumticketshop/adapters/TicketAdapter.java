@@ -67,7 +67,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
             ticketDateTV.setText(currentTicket.getDate());
 
             itemView.findViewById(R.id.ticketModifyButton).setOnClickListener(view -> {
-
+                ((ProfileActivity) context).redirectToTicketModification(currentTicket.getId());
             });
 
             itemView.findViewById(R.id.ticketDeleteButton).setOnClickListener(view -> {
