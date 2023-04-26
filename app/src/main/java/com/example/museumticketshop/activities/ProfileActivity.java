@@ -68,6 +68,25 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
+    public void deleteTicket(String ticketId) {
+        deleteTicketTask(ticketId).addOnSuccessListener(unused -> {
+            Toast.makeText(this, "Ticket has successfully been deleted!",
+                    Toast.LENGTH_LONG).show();
+            ticketAdapter.notifyDataSetChanged();
+            recreate();
+        }
+        ).addOnFailureListener(unused ->
+                Toast.makeText(this,
+                        "There was a problem while attempting to delete the ticket",
+                        Toast.LENGTH_LONG).show()
+        );
+    }
+
+    private Task<Void> deleteTicketTask(String id) {
+        return TicketDao.getInstance().deleteTicket(id);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private void readTicketsForUser(String email) {
         tickets.clear();
 

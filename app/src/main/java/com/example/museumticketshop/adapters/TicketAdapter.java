@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.museumticketshop.R;
+import com.example.museumticketshop.activities.ProfileActivity;
+import com.example.museumticketshop.activities.SelectTicketsActivity;
 import com.example.museumticketshop.entities.Ticket;
 import com.example.museumticketshop.repositories.ExhibitionDao;
 
@@ -63,6 +65,14 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
 
             ticketTypeTV.setText(currentTicket.getTicketType());
             ticketDateTV.setText(currentTicket.getDate());
+
+            itemView.findViewById(R.id.ticketModifyButton).setOnClickListener(view -> {
+
+            });
+
+            itemView.findViewById(R.id.ticketDeleteButton).setOnClickListener(view -> {
+                ((ProfileActivity) context).deleteTicket(currentTicket.getId());
+            });
         }
     }
 }
