@@ -2,7 +2,9 @@ package com.example.museumticketshop.entities;
 public class Exhibition {
     private String id;
     private String name;
+    String openFrom;
     private String description;
+    private int descriptionLength;
     private int imageResource;
 
     public String getId() {
@@ -20,10 +22,13 @@ public class Exhibition {
     public Exhibition() {
     }
 
-    public Exhibition(String id, String name, String description, int imageResource) {
+    public Exhibition(String id, String name, String openFrom, String description,
+                      int descriptionLength, int imageResource) {
         this.id = id;
         this.name = name;
+        this.openFrom = openFrom;
         this.description = description;
+        this.descriptionLength = descriptionLength;
         this.imageResource = imageResource;
     }
 
@@ -45,5 +50,21 @@ public class Exhibition {
 
     public void setImageResource(int imageResource) {
         this.imageResource = imageResource;
+    }
+
+    public int getDescriptionLength() {
+        return descriptionLength;
+    }
+
+    public void setDescriptionLength(int descriptionLength) {
+        this.descriptionLength = descriptionLength;
+    }
+
+    public String getOpenFrom() {
+        return openFrom;
+    }
+
+    public void setOpenFrom(String openFrom) {
+        this.openFrom = openFrom;
     }
 }

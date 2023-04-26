@@ -35,10 +35,16 @@ public class TicketDao {
     public Task<Ticket> readTicketById(String id) {
         FirebaseFirestore firestoreRef = FirebaseFirestore.getInstance();
         CollectionReference collectionRef = firestoreRef.collection(COLLECTION_NAME);
-        Query query = collectionRef.whereEqualTo("id", id).limit(1);
-        return query.get().continueWith(task -> task.getResult().getDocuments()
-                .stream().map(doc -> doc.toObject(Ticket.class))
-                .findFirst().orElse(null));
+        DocumentReference documentRef = firestoreRef.collection(COLLECTION_NAME).document(id);
+        return documentRef.get().continueWith(task -> {
+            DocumentSnapshot snapshot = task.getResult();
+            if (snapshot.exists()) {
+                return snapshot.toObject(Ticket.class);
+            } else {
+                throw new DaoException(
+                        String.format("Ticket with id %s could not be loaded!", id));
+            }
+        });
     }
 
     public Task<List<Ticket>> readTicketsByEmail(String email) {

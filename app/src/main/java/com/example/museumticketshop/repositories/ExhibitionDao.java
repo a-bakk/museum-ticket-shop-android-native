@@ -5,7 +5,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
@@ -49,7 +51,17 @@ public class ExhibitionDao {
     public Task<List<Exhibition>> getAllExhibitions() {
         FirebaseFirestore firestoreReference = FirebaseFirestore.getInstance();
         CollectionReference colRef = firestoreReference.collection(COLLECTION_NAME);
-        return colRef.get().continueWith(task -> {
+        // we do not display the exhibitions on the main page which have a description
+        // that is too long
+        // we also display 5 exhibitions max, ordered by which have been opened most recently
+        // the user can still buy tickets for unlisted exhibitions, they will be listed in
+        // the ticket buy view
+        Query query = colRef
+                .whereLessThanOrEqualTo("descriptionLength", 200)
+                .orderBy("descriptionLength") // needs to be ordered by length first ...
+                .orderBy("openFrom", Query.Direction.DESCENDING)
+                .limit(5);
+        return query.get().continueWith(task -> {
             QuerySnapshot snapshot = task.getResult();
             return snapshot.getDocuments()
                     .stream().map(doc -> doc.toObject(Exhibition.class))
