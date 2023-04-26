@@ -17,8 +17,8 @@ import com.example.museumticketshop.entities.Exhibition;
 import java.util.List;
 
 public class ExhibitionAdapter extends RecyclerView.Adapter<ExhibitionAdapter.ExhibitionViewHolder> {
-    private List<Exhibition> exhibitions;
-    private Context context;
+    private final List<Exhibition> exhibitions;
+    private final Context context;
 
     public ExhibitionAdapter(Context context, List<Exhibition> exhibitions) {
         this.context = context;
@@ -45,9 +45,9 @@ public class ExhibitionAdapter extends RecyclerView.Adapter<ExhibitionAdapter.Ex
     }
 
     class ExhibitionViewHolder extends RecyclerView.ViewHolder {
-        private ImageView exhibitionIV;
-        private TextView exhibitionNameTV;
-        private TextView exhibitionDescriptionTV;
+        private final ImageView exhibitionIV;
+        private final TextView exhibitionNameTV;
+        private final TextView exhibitionDescriptionTV;
 
         public ExhibitionViewHolder(@NonNull View itemView) {
             super(itemView);

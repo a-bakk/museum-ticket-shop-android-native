@@ -1,10 +1,13 @@
 package com.example.museumticketshop.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,11 +15,22 @@ import android.widget.Toast;
 
 import com.example.museumticketshop.MainActivity;
 import com.example.museumticketshop.R;
+import com.example.museumticketshop.adapters.TicketAdapter;
+import com.example.museumticketshop.entities.Ticket;
+import com.example.museumticketshop.repositories.TicketDao;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
+    private static final String TAG = ProfileActivity.class.getName();
+    private List<Ticket> tickets;
+    private TicketAdapter ticketAdapter;
+    private TicketDao ticketDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +47,36 @@ public class ProfileActivity extends AppCompatActivity {
             if (user.getProviderData().stream()
                     .anyMatch(i -> GoogleAuthProvider.PROVIDER_ID.equals(i.getProviderId()))) {
                 // if user is authenticated via google, we do not know their name
-                // (ig we could but whatever)
+                // (ig we could but not for now)
                 profileNameET.setText(R.string.google_authentication);
             } else {
                 profileNameET.setText(user.getDisplayName());
             }
             emailAddressET.setText(user.getEmail());
         }
+
+        ticketDao = TicketDao.getInstance();
+
+        RecyclerView ticketRecyclerView = findViewById(R.id.ticketRecyclerView);
+        ticketRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        tickets = new ArrayList<>();
+        ticketAdapter = new TicketAdapter(this, tickets);
+        ticketRecyclerView.setAdapter(ticketAdapter);
+
+        if (user != null)
+            readTicketsForUser(user.getEmail());
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void readTicketsForUser(String email) {
+        tickets.clear();
+
+        Task<List<Ticket>> ticketTask = ticketDao.readTicketsByEmail(email);
+        ticketTask.addOnSuccessListener(readTickets -> {
+            tickets.addAll(readTickets);
+            ticketAdapter.notifyDataSetChanged();
+        }).addOnFailureListener(e ->
+                Log.e(TAG, "Tickets could not be loaded for user: " + email));
     }
 
     @Override

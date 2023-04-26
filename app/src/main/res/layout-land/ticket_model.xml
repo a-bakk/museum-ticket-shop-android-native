@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="233dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/ticketNamePlaceholder"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/placeholder"
-            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/ticketExhibitionPlaceholder"
@@ -49,7 +41,7 @@
             <Button
                 android:id="@+id/ticketModifyButton"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="315dp"
+                android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:text="@string/modify" />
@@ -57,7 +49,7 @@
             <Button
                 android:id="@+id/ticketDeleteButton"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="332dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:text="@string/delete" />

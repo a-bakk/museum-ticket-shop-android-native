@@ -2,9 +2,15 @@ package com.example.museumticketshop.repositories;
 
 import com.example.museumticketshop.entities.Ticket;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TicketDao {
     private static TicketDao instance;
@@ -28,15 +34,21 @@ public class TicketDao {
 
     public Task<Ticket> readTicketById(String id) {
         FirebaseFirestore firestoreRef = FirebaseFirestore.getInstance();
-        DocumentReference docRef = firestoreRef.collection(COLLECTION_NAME).document(id);
-        return docRef.get().continueWith(task -> {
-            DocumentSnapshot snapshot = task.getResult();
-            if (snapshot.exists()) {
-                return snapshot.toObject(Ticket.class);
-            } else {
-                throw new DaoException(String.format("Ticket with id %s could not be loaded!", id));
-            }
-        });
+        CollectionReference collectionRef = firestoreRef.collection(COLLECTION_NAME);
+        Query query = collectionRef.whereEqualTo("id", id).limit(1);
+        return query.get().continueWith(task -> task.getResult().getDocuments()
+                .stream().map(doc -> doc.toObject(Ticket.class))
+                .findFirst().orElse(null));
+    }
+
+    public Task<List<Ticket>> readTicketsByEmail(String email) {
+        FirebaseFirestore fireStoreRef = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = fireStoreRef.collection(COLLECTION_NAME);
+        Query query = collectionRef.whereEqualTo("userEmail", email)
+                .orderBy("date", Query.Direction.ASCENDING);
+        return query.get().continueWith(task -> task.getResult().getDocuments()
+                .stream().map(doc -> doc.toObject(Ticket.class))
+                .collect(Collectors.toList()));
     }
 
     public Task<Void> updateTicket(String id, Ticket ticket) {
