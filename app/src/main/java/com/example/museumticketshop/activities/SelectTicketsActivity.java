@@ -20,18 +20,21 @@ import com.example.museumticketshop.entities.Exhibition;
 import com.example.museumticketshop.entities.Ticket;
 import com.example.museumticketshop.repositories.ExhibitionDao;
 import com.example.museumticketshop.repositories.TicketDao;
+import com.example.museumticketshop.services.NotificationService;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class SelectTicketsActivity extends AppCompatActivity {
     private Spinner numberOfFullPriceTicketsSpinner;
     private Spinner numberOfHalfPriceTicketsSpinner;
     private Spinner chooseExhibitionSpinner;
     private DatePicker ticketDatePicker;
+    private NotificationService notificationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class SelectTicketsActivity extends AppCompatActivity {
         });
 
         ticketDatePicker = findViewById(R.id.buyTicketDatePicker);
+
+        notificationService = new NotificationService(this);
     }
 
     public void buyTickets(View view) {
@@ -105,6 +110,12 @@ public class SelectTicketsActivity extends AppCompatActivity {
             });
             halfPrice--;
         }
+
+        notificationService.sendNotification(String.format
+                (Locale.ENGLISH, "Congrats on acquiring %d tickets for %s!",
+                        Integer.parseInt(numberOfFullPriceTicketsAsString) +
+                                Integer.parseInt(numberOfHalfPriceTicketsAsString),
+                        exhibition.getName()));
 
         checkForAuthenticationAndRedirect();
     }
