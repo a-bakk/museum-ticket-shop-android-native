@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.museumticketshop.activities.LoginActivity;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         exhibitionRecyclerView.setAdapter(exhibitionAdapter);
 
         getExhibitionsListWithImages();
+
+        findViewById(R.id.textView2).setAnimation(
+                AnimationUtils.loadAnimation(this, R.anim.fade_in));
     }
 
     @SuppressLint("NotifyDataSetChanged")

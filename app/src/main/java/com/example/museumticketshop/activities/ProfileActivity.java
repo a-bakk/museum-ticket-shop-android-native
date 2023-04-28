@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (user != null)
             readTicketsForUser(user.getEmail());
+
+        findViewById(R.id.profileBaseMyTickets)
+                .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_5_times));
     }
 
     public void redirectToTicketModification(String ticketId) {
