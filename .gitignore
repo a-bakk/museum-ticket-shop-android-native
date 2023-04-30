@@ -12,7 +12,6 @@ local.properties
 captures/
 .externalNativeBuild/
 .cxx/
-*.apk
 output.json
 
 # IntelliJ
@@ -21,8 +20,3 @@ output.json
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
-
-# Keystore files
-*.jks
-*.keystore
-app/google-services.json
